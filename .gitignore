@@ -1,0 +1,17 @@
+# Secrets — NEVER commit
+.env
+*.key
+
+# Patient data (not for distribution)
+data/
+
+# Built artifacts (large; regenerate from code)
+agent_artifacts/
+
+# Documents
+*.docx
+
+# Python caches
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
