@@ -37,7 +37,14 @@ def intro():
 
 def narrated_run(rid, C, case_label=""):
     df, dfs, art, db, emb, llm = C["df"], C["dfs"], C["art"], C["db"], C["emb"], C["llm"]
-    row = df[df.record_id == rid].iloc[0]
+    rid = str(rid).strip()                                     # tolerate stray whitespace from copy-paste
+    match = df[df.record_id == rid]                            # look up the patient by full record_id
+    if match.empty:                                            # not found -> friendly message instead of an IndexError
+        print(f"\n  [error] record_id '{rid}' not found.")
+        print("  Pass the FULL id (institution prefix + number), e.g.:  python demo.py GENIE-MSK-P-0016319")
+        print("  Valid examples from the data:", ", ".join(df["record_id"].head(5).tolist()))
+        return
+    row = match.iloc[0]
     banner(f"{case_label}PATIENT {rid}  |  {row.get('stage')}, {row.get('oncotree') or 'NSCLC'}, age {row.get('age_dx')}")
 
     # ---- Agent 1 ----
