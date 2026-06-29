@@ -22,13 +22,17 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 
-load_dotenv(r"C:\Users\Prashant\claude-test\.env")
+HERE = os.path.dirname(os.path.abspath(__file__))   # repo folder, resolved at runtime (portable; no hard-coded path)
+# load .env from the repo folder OR its parent (supports the original layout where .env sits one level up)
+for _d in (HERE, os.path.dirname(HERE)):
+    if os.path.exists(os.path.join(_d, ".env")):
+        load_dotenv(os.path.join(_d, ".env")); break
 API_KEY = os.getenv("OPENAI_API_KEY")
 if not API_KEY:
     raise RuntimeError("OPENAI_API_KEY not found in .env")
 
-DATA = r"C:\Users\Prashant\claude-test\Capstone\data\PJ_Data"
-INDEX_DIR = r"C:\Users\Prashant\claude-test\Capstone\agent_artifacts\faiss_cohort"
+DATA = os.path.join(HERE, "data", "PJ_Data")
+INDEX_DIR = os.path.join(HERE, "agent_artifacts", "faiss_cohort")
 WIN = 140          # benefit observation window (days after T)
 K_RAW = 60         # raw neighbors to pull before filtering
 K_KEEP = 20        # similar patients to keep

@@ -15,7 +15,9 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import re, warnings
 warnings.filterwarnings("ignore")
-import sys; sys.path.insert(0, r"C:\Users\Prashant\claude-test\Capstone")
+import sys
+HERE = os.path.dirname(os.path.abspath(__file__))   # repo folder, resolved at runtime (portable; no hard-coded path)
+sys.path.insert(0, HERE)
 import retrieval_agent as ra
 import agent3_timing as a3
 

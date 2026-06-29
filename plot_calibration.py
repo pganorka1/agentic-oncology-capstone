@@ -9,7 +9,8 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import sys, warnings, numpy as np
 warnings.filterwarnings("ignore")
-sys.path.insert(0, r"C:\Users\Prashant\claude-test\Capstone")
+HERE = os.path.dirname(os.path.abspath(__file__))   # repo folder, resolved at runtime (portable; no hard-coded path)
+sys.path.insert(0, HERE)
 import retrieval_agent as ra
 from joblib import load
 from sklearn.calibration import calibration_curve
@@ -18,8 +19,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ARTIFACT = r"C:\Users\Prashant\claude-test\Capstone\agent_artifacts\benefit_risk_model.joblib"
-OUT = r"C:\Users\Prashant\Desktop\Module5_Capstone_Plan\calibration_curve.png"
+ARTIFACT = os.path.join(HERE, "agent_artifacts", "benefit_risk_model.joblib")
+OUT = os.path.join(HERE, "calibration_curve.png")   # written into the repo folder (no hard-coded user path)
 
 # --- rebuild the exact held-out test set (same as build_classifier.py) ---
 art = load(ARTIFACT)

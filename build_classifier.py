@@ -15,7 +15,8 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import sys, warnings, numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
-sys.path.insert(0, r"C:\Users\Prashant\claude-test\Capstone")
+HERE = os.path.dirname(os.path.abspath(__file__))   # repo folder, resolved at runtime (portable; no hard-coded path)
+sys.path.insert(0, HERE)
 import retrieval_agent as ra                      # reuse features/label/split (consistency)
 
 from sklearn.pipeline import Pipeline
@@ -31,7 +32,7 @@ from sklearn.metrics import (roc_auc_score, average_precision_score, brier_score
                              precision_score, recall_score, f1_score, confusion_matrix)
 from joblib import dump
 
-ARTIFACT = r"C:\Users\Prashant\claude-test\Capstone\agent_artifacts\benefit_risk_model.joblib"
+ARTIFACT = os.path.join(HERE, "agent_artifacts", "benefit_risk_model.joblib")
 
 # ---- leakage-safe FEATURES only (NO label-derived cols: churn/B/C/survival/death) ----
 NUM = ["age_dx", "T", "prog_events_before_T", "scans_before_T", "regimens_before_T"]

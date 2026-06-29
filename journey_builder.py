@@ -22,9 +22,13 @@ import pandas as pd, numpy as np
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
-load_dotenv(r"C:\Users\Prashant\claude-test\.env")
+HERE = os.path.dirname(os.path.abspath(__file__))   # repo folder, resolved at runtime (portable; no hard-coded path)
+# load .env from the repo folder OR its parent (supports the original layout where .env sits one level up)
+for _d in (HERE, os.path.dirname(HERE)):
+    if os.path.exists(os.path.join(_d, ".env")):
+        load_dotenv(os.path.join(_d, ".env")); break
 API_KEY = os.getenv("OPENAI_API_KEY")
-DATA = r"C:\Users\Prashant\claude-test\Capstone\data\PJ_Data"
+DATA = os.path.join(HERE, "data", "PJ_Data")
 
 def L(f): return pd.read_csv(os.path.join(DATA, f), low_memory=False)
 

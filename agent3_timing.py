@@ -15,7 +15,9 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import warnings, joblib, numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
-import sys; sys.path.insert(0, r"C:\Users\Prashant\claude-test\Capstone")
+import sys
+HERE = os.path.dirname(os.path.abspath(__file__))   # repo folder, resolved at runtime (portable; no hard-coded path)
+sys.path.insert(0, HERE)
 import retrieval_agent as ra
 import journey_builder as jb
 import build_classifier as bc
@@ -23,7 +25,7 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
 ACT_THRESHOLD = 0.50          # benefit-likelihood needed to call "now" a good juncture
-MODEL_PATH = r"C:\Users\Prashant\claude-test\Capstone\agent_artifacts\benefit_risk_model.joblib"
+MODEL_PATH = os.path.join(HERE, "agent_artifacts", "benefit_risk_model.joblib")
 
 def load_components():
     art = joblib.load(MODEL_PATH)
